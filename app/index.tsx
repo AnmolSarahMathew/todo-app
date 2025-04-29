@@ -1,12 +1,29 @@
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import TypeWriter from './components/TypeWriter';
 
 // This is for the home screen. And I created like just the text placement here.
-export default function HomeScreen() {
+export default function LandingPage() {
+    const router = useRouter();
+
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>Hej! Sarah</Text>
+            <View style={styles.content}>
+                <Text style={styles.greeting}>Hej Sarah!</Text>
+                <Text style={styles.welcomeText}>Welcome to the New Era of the Programming World.</Text>
+                <TypeWriter 
+                    text="The best way to predict the future is to invent it."
+                    style={styles.quote}
+                    delay={80}
+                />
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => router.push('/home')}
+                >
+                    <Text style={styles.buttonText}>Get Started</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -18,18 +35,54 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop: 24,
     },
-    headerText: {
-        fontSize: 22,
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: Platform.OS === 'web' ? 40 : 20,
+        maxWidth: Platform.OS === 'web' ? 1200 : '100%',
+        marginHorizontal: 'auto',
+    },
+    greeting: {
+        fontSize: Platform.OS === 'web' ? 42 : 32,
         fontWeight: 'bold',
         color: '#222',
-        textAlign: 'left',
-        marginTop: 16,
-        marginLeft: 16,
+        textAlign: 'center',
+        marginBottom: 20,
     },
-
-// cursor wrote this part. We will check this later.
+    welcomeText: {
+        fontSize: Platform.OS === 'web' ? 24 : 20,
+        color: '#444',
+        textAlign: 'center',
+        marginBottom: 16,
+        fontWeight: '500',
+    },
+    quote: {
+        fontSize: Platform.OS === 'web' ? 20 : 16,
+        color: '#666',
+        textAlign: 'center',
+        fontStyle: 'italic',
+        marginBottom: 40,
+    },
+    button: {
+        backgroundColor: '#E9967A',
+        paddingHorizontal: Platform.OS === 'web' ? 32 : 24,
+        paddingVertical: Platform.OS === 'web' ? 16 : 12,
+        borderRadius: 8,
+        marginTop: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    buttonText: {
+        fontSize: Platform.OS === 'web' ? 18 : 16,
+        fontWeight: '600',
+        color: '#222',
+        textAlign: 'center',
+    },
 });
 
 export function IndexRedirect() {
